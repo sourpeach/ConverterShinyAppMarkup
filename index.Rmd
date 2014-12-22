@@ -1,0 +1,68 @@
+---
+title       : Shiny App Project
+subtitle    : My Pound to Kilogram converter
+author      : Laura 
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [bootstrap, quiz, shiny, interactive]  # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+
+---
+
+## Intended purpose of the App
+
+
+### The intended purpose of my app is to converting Pounds to Kilogram
+
+*1. Users will input the weight in Pounds in 5 pounds intervals*
+
+*2. The program will output weight in Kilograms*
+
+
+---
+
+## My formula/method 
+
+### The formula used to convert the numbers
+
+### Kilograms = Pounds / 2.2046
+
+
+---&interactive
+
+## ui.R
+```{r opt.label = 'shiny'}
+slidifyUI(
+  sidebarPanel(
+    selectInput('sex', 'Choose Sex', c('Male', 'Female')),
+    selectInput('type', 'Choose Type',
+      c('multiBarChart', 'multiBarHorizontalChart')
+    )
+  ),
+  mainPanel(
+    tags$div(id = 'nvd3plot', class='shiny-html-output nvd3 rChart')
+  )
+)
+```
+
+---&interactive  
+
+## server.R
+```{r}
+pdtokg <- function(pound) pound / 2.2046
+shinyServer(
+  function(input, output) {
+    output$inputValue <- renderPrint({input$pound})
+    output$prediction <- renderPrint({pdtokg(input$pound)})
+  }
+)
+```
+
+
+
+
+
+
+
